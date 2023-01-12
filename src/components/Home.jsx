@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import {
+  getCategories,
+  getProductsFromCategoryAndQuery,
+  getProductById } from '../services/api';
 import SearchCard from './SearchCard';
 
 class Home extends Component {
@@ -9,7 +12,6 @@ class Home extends Component {
     inputSearch: '',
     result: [],
     isEmpty: true,
-    categories: '',
   };
 
   async componentDidMount() {
@@ -25,9 +27,13 @@ class Home extends Component {
   };
 
   handleSearchButton = async () => {
-    const { inputSearch, categories } = this.state;
-    const result = await getProductsFromCategoryAndQuery(categories, inputSearch);
-    console.log(result);
+    const { inputSearch } = this.state;
+    const result = await getProductsFromCategoryAndQuery('', inputSearch);
+    this.setState({ result, isEmpty: false });
+  };
+
+  handleRadioButton = async (id) => {
+    const result = await getProductById(id);
     this.setState({ result, isEmpty: false });
   };
 
@@ -86,11 +92,10 @@ class Home extends Component {
               <label data-testid="category" key={ category.id } htmlFor="categories">
                 { category.name }
                 <input
-                  onChange={ this.handleChange }
                   type="radio"
                   name="categories"
                   value={ category.id }
-                  onClick={ () => this.handleSearchButton() }
+                  onChange={ () => this.handleRadioButton(category.id) }
                 />
               </label>
             ))
