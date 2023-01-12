@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import {
+  getCategories,
+  getProductsFromCategoryAndQuery } from '../services/api';
 import SearchCard from './SearchCard';
 
 class Home extends Component {
@@ -18,16 +20,19 @@ class Home extends Component {
 
   handleChange = ({ target }) => {
     const { name } = target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const values = target.type === 'checkbox' ? target.checked : target.value;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: values });
   };
 
   handleSearchButton = async () => {
     const { inputSearch } = this.state;
-
     const result = await getProductsFromCategoryAndQuery('', inputSearch);
+    this.setState({ result, isEmpty: false });
+  };
 
+  handleRadioButton = async (id) => {
+    const result = await getProductsFromCategoryAndQuery(id, '');
     this.setState({ result, isEmpty: false });
   };
 
@@ -83,9 +88,15 @@ class Home extends Component {
         <div className="categories">
           {
             apiReturn.map((category) => (
-              <label data-testid="category" key={ category.id } htmlFor="categories">
+              <label data-testid="category" key={ category.id } htmlFor={ category.id }>
                 { category.name }
-                <input type="radio" name="categories" id="" />
+                <input
+                  id={ category.id }
+                  type="radio"
+                  name="categories"
+                  value={ category.id }
+                  onChange={ () => this.handleRadioButton(category.id) }
+                />
               </label>
             ))
           }
@@ -94,5 +105,7 @@ class Home extends Component {
     );
   }
 }
+
+// oi
 
 export default Home;
