@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
   getCategories,
-  getProductsFromCategoryAndQuery,
-  getProductById } from '../services/api';
+  getProductsFromCategoryAndQuery } from '../services/api';
 import SearchCard from './SearchCard';
 
 class Home extends Component {
@@ -33,7 +32,7 @@ class Home extends Component {
   };
 
   handleRadioButton = async (id) => {
-    const result = await getProductById(id);
+    const result = await getProductsFromCategoryAndQuery(id, '');
     this.setState({ result, isEmpty: false });
   };
 
@@ -89,9 +88,10 @@ class Home extends Component {
         <div className="categories">
           {
             apiReturn.map((category) => (
-              <label data-testid="category" key={ category.id } htmlFor="categories">
+              <label data-testid="category" key={ category.id } htmlFor={ category.id }>
                 { category.name }
                 <input
+                  id={ category.id }
                   type="radio"
                   name="categories"
                   value={ category.id }
