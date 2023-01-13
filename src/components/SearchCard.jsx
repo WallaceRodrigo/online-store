@@ -23,6 +23,7 @@ class SearchCard extends Component {
           </li>
         </Link>
         <input
+          data-testid="product-add-to-cart"
           type="button"
           value="adiciona ao carinho"
           onClick={ () => this.addCartButton(array) }
