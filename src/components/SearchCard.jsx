@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 class SearchCard extends Component {
   addCartButton = (id) => {
-    localStorage.setItem('productId', JSON.stringify([]));
-    const productId = JSON.parse(localStorage.getItem('productId'));
-    const productIdArray = productId.push(id);
-    localStorage.setItem('productId', JSON.stringify(productIdArray));
+    const getProducts = localStorage.getItem('productId');
+    const productArray = getProducts ? JSON.parse(getProducts) : [];
+    productArray.push(id);
+    localStorage.setItem('productId', JSON.stringify(productArray));
   };
 
   render() {
