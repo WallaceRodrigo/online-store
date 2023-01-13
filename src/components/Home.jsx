@@ -43,6 +43,7 @@ class Home extends Component {
     return results.map(({ price, title, thumbnail, id }) => (
       <SearchCard
         key={ id }
+        id={ id }
         price={ price }
         title={ title }
         thumbnail={ thumbnail }
@@ -63,9 +64,12 @@ class Home extends Component {
                 Digite algum termo de pesquisa ou escolha uma categoria.
               </h2>
             )
-            : this.renderCard(results)
+            : (
+              <ol>
+                {this.renderCard(results)}
+              </ol>
+            )
         }
-
         <div>
           <label htmlFor="search">
             Pesquisa
@@ -105,7 +109,5 @@ class Home extends Component {
     );
   }
 }
-
-// oi
 
 export default Home;
