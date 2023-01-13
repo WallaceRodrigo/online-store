@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class SearchCard extends Component {
-  addCartButton = (id) => {
-    const getProducts = localStorage.getItem('productId');
+  addCartButton = (array) => {
+    const getProducts = localStorage.getItem('products');
     const productArray = getProducts ? JSON.parse(getProducts) : [];
-    productArray.push(id);
-    localStorage.setItem('productId', JSON.stringify(productArray));
+    productArray.push(array);
+    localStorage.setItem('products', JSON.stringify(productArray));
   };
 
   render() {
-    const { title, thumbnail, price, id } = this.props;
+    const { title, thumbnail, price, id, array } = this.props;
 
     return (
       <div>
@@ -25,7 +25,7 @@ class SearchCard extends Component {
         <input
           type="button"
           value="adiciona ao carinho"
-          onClick={ () => this.addCartButton(id) }
+          onClick={ () => this.addCartButton(array) }
         />
       </div>
 
@@ -38,6 +38,9 @@ SearchCard.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  array: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default SearchCard;

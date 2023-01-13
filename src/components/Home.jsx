@@ -40,13 +40,14 @@ class Home extends Component {
     if (results <= 0) {
       return <h2>Nenhum produto foi encontrado</h2>;
     }
-    return results.map(({ price, title, thumbnail, id }) => (
+    return results.map((result) => (
       <SearchCard
-        key={ id }
-        id={ id }
-        price={ price }
-        title={ title }
-        thumbnail={ thumbnail }
+        key={ result.id }
+        id={ result.id }
+        price={ result.price }
+        title={ result.title }
+        thumbnail={ result.thumbnail }
+        array={ result }
       />
     ));
   };
