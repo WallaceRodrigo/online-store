@@ -3,17 +3,31 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class SearchCard extends Component {
+  addCartButton = (id) => {
+    localStorage.setItem('productId', JSON.stringify([]));
+    const productId = JSON.parse(localStorage.getItem('productId'));
+    const productIdArray = productId.push(id);
+    localStorage.setItem('productId', JSON.stringify(productIdArray));
+  };
+
   render() {
     const { title, thumbnail, price, id } = this.props;
 
     return (
-      <Link to={ `/Product/${id}` } data-testid="product-detail-link">
-        <li data-testid="product">
-          <h2>{ title }</h2>
-          <img src={ thumbnail } alt={ title } />
-          <h3>{ price }</h3>
-        </li>
-      </Link>
+      <div>
+        <Link to={ `/Product/${id}` } data-testid="product-detail-link">
+          <li data-testid="product">
+            <h2>{ title }</h2>
+            <img src={ thumbnail } alt={ title } />
+            <h3>{ price }</h3>
+          </li>
+        </Link>
+        <input
+          type="button"
+          value="adiciona ao carinho"
+          onClick={ () => this.addCartButton(id) }
+        />
+      </div>
 
     );
   }
